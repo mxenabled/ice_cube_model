@@ -15,7 +15,7 @@ class Appointment
         :repeat_day,
         :repeat_weekday
 
-    include ::IceCubeModel
+    include ::IceCubeModel::Base
 end
 
 appointment = Appointment.new

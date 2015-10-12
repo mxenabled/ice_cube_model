@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ::IceCubeModel do
-  class CyclicalObj
+  class IceCubeObj
     include ::IceCubeModel::Base
 
     def initialize(options = {})
@@ -24,7 +24,7 @@ describe ::IceCubeModel do
 
   describe 'monthly' do
     let(:projector) do
-      ::CyclicalObj.new(
+      ::IceCubeObj.new(
         :start_date => ::Date.new(2015, 6, 1),
         :repeat_day => '1'
       )
@@ -47,7 +47,7 @@ describe ::IceCubeModel do
 
   describe 'twice monthly' do
     let(:projector) do
-      ::CyclicalObj.new(
+      ::IceCubeObj.new(
         :start_date => ::Date.new(2015, 6, 1),
         :repeat_day => '1,15'
       )
@@ -64,7 +64,7 @@ describe ::IceCubeModel do
 
   describe 'bi-monthly' do
     let(:projector) do
-      ::CyclicalObj.new(
+      ::IceCubeObj.new(
         :start_date => ::Date.new(2015, 5, 1),
         :repeat_day => '1',
         :repeat_interval => '2'
@@ -82,7 +82,7 @@ describe ::IceCubeModel do
 
   describe 'every week' do
     let(:projector) do
-      ::CyclicalObj.new(
+      ::IceCubeObj.new(
         :start_date => ::Date.new(2015, 7, 6),
         :repeat_weekday => '1',
         :repeat_day => nil
@@ -122,7 +122,7 @@ describe ::IceCubeModel do
 
   describe 'every two weeks' do
     let(:projector) do
-      ::CyclicalObj.new(
+      ::IceCubeObj.new(
         :start_date => ::Date.new(2015, 7, 6),
         :repeat_weekday => '1',
         :repeat_day => nil,
@@ -163,7 +163,7 @@ describe ::IceCubeModel do
 
   describe 'annually' do
     let(:projector) do
-      ::CyclicalObj.new(
+      ::IceCubeObj.new(
         :start_date => ::Date.new(2015, 1, 1),
         :repeat_month => 2,
         :repeat_day => 1
@@ -177,7 +177,7 @@ describe ::IceCubeModel do
 
   describe 'bi-annually' do
     let(:projector) do
-      ::CyclicalObj.new(
+      ::IceCubeObj.new(
         :start_date => ::Date.new(2015, 1, 1),
         :repeat_interval => 2,
         :repeat_month => 2,
@@ -193,7 +193,7 @@ describe ::IceCubeModel do
   describe 'last weekday of month' do
     context '31 day month' do
       let(:projector) do
-        ::CyclicalObj.new(
+        ::IceCubeObj.new(
           :start_date => ::Date.new(2015, 1, 1),
           :repeat_day => '31, 30, 29, 28, 27, 26, 25',
           :repeat_weekday => 5
@@ -207,7 +207,7 @@ describe ::IceCubeModel do
 
     context '31 day month' do
       let(:projector) do
-        ::CyclicalObj.new(
+        ::IceCubeObj.new(
           :start_date => ::Date.new(2015, 1, 1),
           :repeat_day => '31, 30, 29, 28, 27, 26, 25',
           :repeat_weekday => 1
@@ -222,7 +222,7 @@ describe ::IceCubeModel do
 
   describe 'handles ::DateTime as input' do
     let(:projector) do
-      ::CyclicalObj.new(
+      ::IceCubeObj.new(
         :start_date => ::DateTime.new(2015, 5, 1),
         :repeat_day => '1',
         :repeat_interval => '2'
@@ -236,7 +236,7 @@ describe ::IceCubeModel do
 
   describe 'handles integer (epoch) as input' do
     let(:projector) do
-      ::CyclicalObj.new(
+      ::IceCubeObj.new(
         :start_date => 1_430_438_400, # Fri, 01 May 2015 00:00:00 GMT
         :repeat_day => '1',
         :repeat_interval => '2'
