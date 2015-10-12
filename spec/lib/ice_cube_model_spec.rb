@@ -247,4 +247,46 @@ describe ::IceCubeModel do
       expect(projector.events_between(::DateTime.new(2015, 7, 1), ::DateTime.new(2015, 7, 31))).to eq([::DateTime.new(2015, 7, 1)])
     end
   end
+
+  describe '::ClassMethods' do
+    class IceCubeObjWithParameterMappings
+      include ::IceCubeModel::Base
+
+      with_repeat_param(:repeat_start_date, :start_date) # remap parameter to another
+      with_repeat_param(:repeat_interval, :interval) # remap parameter to a method
+      with_repeat_param(:repeat_day, -> { 1 }) # map parameter to lambda
+
+      def initialize(options = {})
+        @options = {
+          :start_date => nil,
+          :repeat_interval => nil,
+          :repeat_year => nil,
+          :repeat_month => nil,
+          :repeat_day => nil,
+          :repeat_weekday => nil,
+          :repeat_week => nil
+        }.merge(options)
+      end
+
+      def interval
+        1
+      end
+
+      def method_missing(m, *_args, &_block)
+        return @options[m] if @options.key?(m)
+        fail ArgumentError, "Method `#{m}` doesn't exist."
+      end
+    end
+
+    let(:projector) do
+      ::IceCubeObjWithParameterMappings.new(
+        :start_date => ::Date.new(2015, 1, 1),
+        :repeat_month => 2
+      )
+    end
+
+    it 'should render correctly' do
+      expect(projector.events_between(::Date.new(2015, 1, 1), ::Date.new(2015, 12, 31))).to eq([::Date.new(2015, 2, 1)])
+    end
+  end
 end
