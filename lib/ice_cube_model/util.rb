@@ -1,7 +1,7 @@
 module IceCubeModel
   module Util
     def self.build_schedule(params)
-      schedule = ::IceCube::Schedule.new(::IceCubeModel::Util.sanitize_date_param(params[:start_date]))
+      schedule = ::IceCube::Schedule.new(::IceCubeModel::Util.sanitize_date_param(params[:repeat_start_date]))
       schedule.add_recurrence_rule ::IceCubeModel::Util.build_cyclical_repeat_rules(params)
 
       schedule
