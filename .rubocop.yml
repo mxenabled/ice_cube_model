@@ -1,0 +1,14 @@
+AllCops:
+  DisplayCopNames: true
+
+Style/HashSyntax:
+  EnforcedStyle: hash_rockets
+
+Style/AccessModifierIndentation:
+  EnforcedStyle: outdent
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
