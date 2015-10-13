@@ -89,12 +89,12 @@ class Appointment
 end
 ```
 
-## NOTES:
+## notes
 - This gem is a work-in-progress.
 - `occurrences_between` is the only method currently supported.
 - Does not yet support all recurrence options. More coming.
 
-## ToDo:
+## todo
 - Add more examples to specs and README
 - Add ability to do Nth types of repeats (e.g. last friday of the month, first and third tuesday of every month). These are supported by ice_cube.
 

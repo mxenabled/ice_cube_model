@@ -5,11 +5,11 @@ require 'ice_cube_model/version'
 Gem::Specification.new do |s|
   s.name        = 'ice_cube_model'
   s.version     = IceCubeModel::VERSION
-  s.authors     = ['MXDev']
-  s.email       = ['dev@mx.com']
-  s.homepage    = 'https://git.moneydesktop.com/matthew-nichols/ice_cube_model'
-  s.summary     = 'Anything cyclical'
-  s.description = 'Extend cyclical cron capabilities onto any object with cyclical properties.'
+  s.authors     = ['Matt Nichols']
+  s.email       = ['matt@nichols.name']
+  s.homepage    = 'https://github.com/mattnichols/ice_cube_model'
+  s.summary     = 'Extend any class with ice_cube (calendar repeating events) capabilities.'
+  s.description = 'Add ice_cube methods to classes (e.g. active_record, active_model).'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
