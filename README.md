@@ -1,7 +1,16 @@
 # ice_cube_model
-Extend any object with [ice_cube](https://github.com/seejohnrun/ice_cube) (calendar repeating event) capabilities.
+Extend any "cron-expression" object with [ice_cube](https://github.com/seejohnrun/ice_cube) (calendar repeating event) capabilities.
 
-Add ice_cube methods to classes (e.g. active_record, active_model).
+Add ice_cube methods to a class (e.g. active_record, active_model) that has cron expression fields.
+
+## description
+
+**ice_cube** is a sold library for projecting and querying recurrence rules. **Cron** is _the_ standard for expressing recurrence rules. If you have a model that stores cron fields in separate attributes, then this gem will allow you to map those attributes into ice_cube and execute projection and queries against it.
+
+The fields in the model can use standard cron expression syntax [explained here](https://en.wikipedia.org/wiki/Cron). This includes range expressions, series expressions, "last" day of month, Nth weekday of month, etc.
+
+PLEASE NOTE:
+This gem is a work-in-progress. Many features have yet to be implemented.
 
 ## installation
 
@@ -93,8 +102,14 @@ end
 - This gem is a work-in-progress.
 - `occurrences_between` is the only method currently supported.
 - Does not yet support all recurrence options. More coming.
+- Does not support inheritance. with_repeat_params called on child classes will mess with parent class' mappings.
 
 ## todo
 - Add more examples to specs and README
 - Add ability to do Nth types of repeats (e.g. last friday of the month, first and third tuesday of every month). These are supported by ice_cube.
+- Add support for repeat_end_date
+- Add support for inheritance
+- Add support for time
+- Allow mapping of a single cron expression (string) field, rather than individual fields.
+- split out cron expression mapping to a separate gem `ice_cube_cron`
 
