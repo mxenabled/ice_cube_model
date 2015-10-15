@@ -7,7 +7,7 @@ module IceCubeModel
     def events_between(start, through)
       params = read_cyclical_params
       schedule = ::IceCubeModel::Util.build_schedule(params)
-      schedule.occurrences_between(::IceCubeModel::Util.sanitize_date_param(start), ::IceCubeModel::Util.sanitize_date_param(through)).map(&:to_date)
+      schedule.occurrences_between(::IceCubeModel::Util.sanitize_date_param(start), ::IceCubeModel::Util.sanitize_date_param(through))
     end
 
   private
