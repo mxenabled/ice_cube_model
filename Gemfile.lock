@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ice_cube_model (0.0.1)
+    ice_cube_model (0.0.2)
       ice_cube_cron (>= 0.0.2)
 
 GEM
