@@ -221,6 +221,21 @@ describe ::IceCubeModel do
       end
     end
 
+    describe 'last day of month' do
+      context '31 day month' do
+        let(:ice_cube_model) do
+          ::IceCubeObj.new(
+            :repeat_start_date => ::Date.new(2015, 1, 1),
+            :repeat_day => 'L'
+          )
+        end
+
+        it 'for one multiple months' do
+          expect(ice_cube_model.events_between(::Date.new(2015, 12, 1), ::Date.new(2016, 3, 1))).to eq([::Date.new(2015, 12, 31), ::Date.new(2016, 1, 31), ::Date.new(2016, 2, 29)])
+        end
+      end
+    end
+
     describe 'Nth day of week of month' do
       let(:ice_cube_model) do
         ::IceCubeObj.new(

@@ -109,7 +109,7 @@ end
 |ever other friday|2||||5|
 |every 6 months on the 5th|6|||5||
 |last friday of every month|||||5L|
-|last day every month _(not supported yet)_||||L||
+|last day every month||||L||
 
 ## notes
 - This gem is a work-in-progress.
@@ -118,11 +118,9 @@ end
 - Does not support inheritance. with_repeat_params called on child classes will mess with parent class' mappings.
 
 ## todo
-- Add more examples to specs and README
-- Add ability to do Nth types of repeats (e.g. last friday of the month, first and third tuesday of every month). These are supported by ice_cube.
 - Add support for repeat_end_date
 - Add support for inheritance
 - Add support for time
 - Allow mapping of a single cron expression (string) field, rather than individual fields.
-- split out cron expression mapping to a separate gem `ice_cube_cron`
+- Split out cron expression mapping to a separate gem `ice_cube_cron`
 

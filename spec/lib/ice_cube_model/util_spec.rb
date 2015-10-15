@@ -29,6 +29,20 @@ describe ::IceCubeModel::Util do
     end
   end
 
+  describe '#sanitize_day_param' do
+    it 'should accept single day expression' do
+      expect(described_class.sanitize_day_param('1')).to eq([1])
+    end
+
+    it 'should accept series expression' do
+      expect(described_class.sanitize_day_param('1,3')).to eq([1, 3])
+    end
+
+    it 'should accept last day expression' do
+      expect(described_class.sanitize_day_param('L')).to eq([-1])
+    end
+  end
+
   describe '#nth_day?' do
     it 'should accept nil' do
       expect(described_class.nth_day?(nil)).to be false

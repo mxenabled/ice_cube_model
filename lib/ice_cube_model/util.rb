@@ -40,6 +40,18 @@ module IceCubeModel
       date
     end
 
+    def self.sanitize_day_param(param)
+      return nil if param.blank?
+      return param if param.is_a?(::Array)
+      return [param] if param.is_a?(::Integer)
+
+      param.split(',').map do |element|
+        next -1 if element == 'L'
+
+        element.to_i
+      end
+    end
+
     def self.sanitize_integer_array_param(param)
       return nil if param.blank?
       return param if param.is_a?(::Array)
@@ -49,7 +61,8 @@ module IceCubeModel
     end
 
     def self.sanitize_week_day_param(param)
-      param.to_s.split(',').map do |element|
+      return nil if param.blank?
+      param.split(',').map do |element|
         if element =~ /[0-9]+#[0-9]+/
           parts = element.split('#')
           { sanitize_integer_param(parts[0]) => sanitize_integer_array_param(parts[1]) }
