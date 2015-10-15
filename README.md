@@ -122,5 +122,4 @@ end
 - Add support for inheritance
 - Add support for time
 - Allow mapping of a single cron expression (string) field, rather than individual fields.
-- Split out cron expression mapping to a separate gem `ice_cube_cron`
 

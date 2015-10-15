@@ -18,8 +18,7 @@ Gem::Specification.new do |s|
   ##
   # Dependencies
   #
-  s.add_dependency 'ice_cube', '= 0.13.0'
-  s.add_dependency 'activesupport', '>= 3.0.0'
+  s.add_dependency 'ice_cube_cron', '>= 0.0.2'
 
   ##
   # Development Dependencies
@@ -27,11 +26,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'simplecov'
   s.add_development_dependency 'rubocop'
-  s.add_development_dependency 'guard'
-  s.add_development_dependency 'guard-rspec'
-  s.add_development_dependency 'guard-rubocop'
-  s.add_development_dependency 'spring'
-  s.add_development_dependency 'spring-commands-rspec'
 end

@@ -5,10 +5,12 @@ module IceCubeModel
     end
 
     def events_between(start, through)
-      params = read_cyclical_params
-      schedule = ::IceCubeModel::Util.build_schedule(params)
+      params = read_repeat_params
+      schedule = ::IceCube::Schedule.from_cron(read_repeat_parameter(:repeat_start_date), params)
+
       schedule.occurrences_between(::IceCubeModel::Util.sanitize_date_param(start), ::IceCubeModel::Util.sanitize_date_param(through))
     end
+    alias_method :occurrences_between, :events_between
 
   private
 
@@ -16,14 +18,13 @@ module IceCubeModel
       send(self.class.repeat_parameter_mappings[param_name])
     end
 
-    def read_cyclical_params
+    def read_repeat_params
       {
-        :repeat_start_date => ::IceCubeModel::Util.sanitize_date_param(read_repeat_parameter(:repeat_start_date)),
-        :repeat_interval => ::IceCubeModel::Util.sanitize_integer_param(read_repeat_parameter(:repeat_interval)),
-        :repeat_year => ::IceCubeModel::Util.sanitize_integer_array_param(read_repeat_parameter(:repeat_year)),
-        :repeat_month => ::IceCubeModel::Util.sanitize_integer_array_param(read_repeat_parameter(:repeat_month)),
-        :repeat_day => ::IceCubeModel::Util.sanitize_day_param(read_repeat_parameter(:repeat_day)),
-        :repeat_weekday => ::IceCubeModel::Util.sanitize_week_day_param(read_repeat_parameter(:repeat_weekday))
+        :repeat_interval => read_repeat_parameter(:repeat_interval),
+        :repeat_year => read_repeat_parameter(:repeat_year),
+        :repeat_month => read_repeat_parameter(:repeat_month),
+        :repeat_day => read_repeat_parameter(:repeat_day),
+        :repeat_weekday => read_repeat_parameter(:repeat_weekday)
       }
     end
 
