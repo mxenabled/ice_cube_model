@@ -49,15 +49,15 @@ module IceCubeModel
     end
 
     def self.sanitize_week_day_param(param)
-      if param =~ /[0-9]+#[0-9]+/
-        parts = param.split('#')
-        [
-          {
-            sanitize_integer_param(parts[0]) => sanitize_integer_array_param(parts[1])
-          }
-        ]
-      else
-        sanitize_integer_array_param(param)
+      param.to_s.split(',').map do |element|
+        if element =~ /[0-9]+#[0-9]+/
+          parts = element.split('#')
+          { sanitize_integer_param(parts[0]) => sanitize_integer_array_param(parts[1]) }
+        elsif element =~ /[0-9]+L/
+          { sanitize_integer_param(element) => [-1] }
+        else
+          sanitize_integer_param(element)
+        end
       end
     end
 

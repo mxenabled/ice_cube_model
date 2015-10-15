@@ -198,8 +198,7 @@ describe ::IceCubeModel do
         let(:ice_cube_model) do
           ::IceCubeObj.new(
             :repeat_start_date => ::Date.new(2015, 1, 1),
-            :repeat_day => '31, 30, 29, 28, 27, 26, 25',
-            :repeat_weekday => 5
+            :repeat_weekday => '5L'
           )
         end
 
@@ -212,14 +211,12 @@ describe ::IceCubeModel do
         let(:ice_cube_model) do
           ::IceCubeObj.new(
             :repeat_start_date => ::Date.new(2015, 1, 1),
-            :repeat_day => '31, 30, 29, 28, 27, 26, 25',
-            :repeat_weekday => 3
+            :repeat_weekday => '3L'
           )
         end
 
         it 'for one month' do
-          skip 'not supported'
-          expect(ice_cube_model.events_between(::Date.new(2016, 2, 1), ::Date.new(2016, 2, 29))).to eq([::Date.new(2016, 2, 29)])
+          expect(ice_cube_model.events_between(::Date.new(2016, 2, 1), ::Date.new(2016, 2, 29))).to eq([::Date.new(2016, 2, 24)])
         end
       end
     end

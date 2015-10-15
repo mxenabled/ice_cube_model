@@ -108,7 +108,7 @@ end
 |1st monday of every month|||||1#1|
 |ever other friday|2||||5|
 |every 6 months on the 5th|6|||5||
-|last friday of every month _(not supported yet)_|||||5L|
+|last friday of every month|||||5L|
 |last day every month _(not supported yet)_||||L||
 
 ## notes

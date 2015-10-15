@@ -23,6 +23,10 @@ describe ::IceCubeModel::Util do
     it 'should accept nth weekday expression' do
       expect(described_class.sanitize_week_day_param('1#3')).to eq([{ 1 => [3] }])
     end
+
+    it 'should accept last weekday expression' do
+      expect(described_class.sanitize_week_day_param('1L')).to eq([{ 1 => [-1] }])
+    end
   end
 
   describe '#nth_day?' do
