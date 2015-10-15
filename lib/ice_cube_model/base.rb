@@ -23,7 +23,7 @@ module IceCubeModel
         :repeat_year => ::IceCubeModel::Util.sanitize_integer_array_param(read_repeat_parameter(:repeat_year)),
         :repeat_month => ::IceCubeModel::Util.sanitize_integer_array_param(read_repeat_parameter(:repeat_month)),
         :repeat_day => ::IceCubeModel::Util.sanitize_integer_array_param(read_repeat_parameter(:repeat_day)),
-        :repeat_weekday => ::IceCubeModel::Util.sanitize_integer_array_param(read_repeat_parameter(:repeat_weekday))
+        :repeat_weekday => ::IceCubeModel::Util.sanitize_week_day_param(read_repeat_parameter(:repeat_weekday))
       }
     end
 

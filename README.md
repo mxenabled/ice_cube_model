@@ -98,6 +98,19 @@ class Appointment
 end
 ```
 
+## recurrence rule examples (date)
+
+|desc|interval|year|month|day|weekday|
+|----|-------:|---:|----:|--:|------:|
+|1st of every month||||1||
+|1st and 15th of every month||||1,15||
+|every monday|||||1|
+|1st monday of every month|||||1#1|
+|ever other friday|2||||5|
+|every 6 months on the 5th|6|||5||
+|last friday of every month _(not supported yet)_|||||5L|
+|last day every month _(not supported yet)_||||L||
+
 ## notes
 - This gem is a work-in-progress.
 - `occurrences_between` is the only method currently supported.

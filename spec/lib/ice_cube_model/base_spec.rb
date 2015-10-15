@@ -228,8 +228,7 @@ describe ::IceCubeModel do
       let(:ice_cube_model) do
         ::IceCubeObj.new(
           :repeat_start_date => ::Date.new(2015, 1, 1),
-          :repeat_day => '8, 9, 10, 11, 12, 13, 14',
-          :repeat_weekday => 1
+          :repeat_weekday => '1#2'
         )
       end
 
