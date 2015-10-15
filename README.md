@@ -1,4 +1,7 @@
+[![Gem Version](https://badge.fury.io/rb/ice_cube_model.svg)](https://badge.fury.io/rb/ice_cube_model)
+
 # ice_cube_model
+
 Extend any "cron-expression" object with [ice_cube](https://github.com/seejohnrun/ice_cube) (calendar repeating event) capabilities.
 
 Add ice_cube methods to a class (e.g. active_record, active_model) that has cron expression fields.
@@ -49,7 +52,6 @@ appointment.occurrences_between(::Date.new(2015, 3, 5), ::Date.new(2015, 6, 5))
 If needed, you can remap the attributes expected by ice_cube to other attributes or methods on the class.
 
 ```ruby
-
 # map to another attribute
 class Appointment
     attr_accessor 
