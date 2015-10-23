@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/mattnichols/ice_cube_cron.git
+  revision: 1b004c79d9344234d26a65020b6c00aff50c854c
+  specs:
+    ice_cube_cron (0.0.2)
+      activesupport (>= 3.0.0)
+      ice_cube (= 0.13.0)
+
 PATH
   remote: .
   specs:
@@ -20,9 +28,6 @@ GEM
     diff-lcs (1.2.5)
     i18n (0.7.0)
     ice_cube (0.13.0)
-    ice_cube_cron (0.0.2)
-      activesupport (>= 3.0.0)
-      ice_cube (= 0.13.0)
     json (1.8.3)
     method_source (0.8.2)
     minitest (5.8.1)
@@ -64,6 +69,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ice_cube_cron!
   ice_cube_model!
   pry
   rake
