@@ -10,7 +10,8 @@ describe ::IceCubeModel do
         :repeat_month => nil,
         :repeat_day => nil,
         :repeat_weekday => nil,
-        :repeat_week => nil
+        :repeat_week => nil,
+        :repeat_until => nil
       }.merge(attributes)
     end
 
@@ -251,6 +252,20 @@ describe ::IceCubeModel do
       it 'for mutiple months' do
         expect(ice_cube_model.events_between(::Date.new(2016, 2, 1), ::Date.new(2016, 4, 30))).to eq([::Date.new(2016, 2, 8), ::Date.new(2016, 3, 14), ::Date.new(2016, 4, 11)])
       end
+    end
+  end
+
+  context 'every month until date' do
+    let(:ice_cube_model) do
+      ::IceCubeObj.new(
+        :repeat_start_date => ::Date.new(2015, 1, 1),
+        :repeat_day => '1',
+        :repeat_until => ::Date.new(2015, 3, 1)
+      )
+    end
+
+    it 'ends on specified end date' do
+      expect(ice_cube_model.events_between(::Date.new(2015, 1, 1), ::Date.new(2015, 6, 30))).to eq([::Date.new(2015, 1, 1), ::Date.new(2015, 2, 1), ::Date.new(2015, 3, 1)])
     end
   end
 

@@ -24,7 +24,8 @@ module IceCubeModel
         :repeat_year => read_repeat_parameter(:repeat_year),
         :repeat_month => read_repeat_parameter(:repeat_month),
         :repeat_day => read_repeat_parameter(:repeat_day),
-        :repeat_weekday => read_repeat_parameter(:repeat_weekday)
+        :repeat_weekday => read_repeat_parameter(:repeat_weekday),
+        :repeat_until => read_repeat_parameter(:repeat_until)
       }
     end
 
@@ -38,7 +39,8 @@ module IceCubeModel
                                                         :repeat_year       => :repeat_year,
                                                         :repeat_month      => :repeat_month,
                                                         :repeat_day        => :repeat_day,
-                                                        :repeat_weekday    => :repeat_weekday)
+                                                        :repeat_weekday    => :repeat_weekday,
+                                                        :repeat_until      => :repeat_until)
         end
 
         class_variable_get(mappings_name)
