@@ -117,11 +117,9 @@ end
 - This gem is a work-in-progress.
 - `occurrences_between` is the only method currently supported.
 - Does not yet support all recurrence options. More coming.
-- Does not support inheritance. with_repeat_params called on child classes will mess with parent class' mappings.
+- Supports inheritance but will not pick up dynamic changes in parent class parameter mappings.
 
 ## todo
-- Add support for repeat_end_date
-- Add support for inheritance
-- Add support for time
+- Add support for time options
 - Allow mapping of a single cron expression (string) field, rather than individual fields.
 
