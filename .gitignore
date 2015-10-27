@@ -36,3 +36,4 @@ Gemfile.lock
 .rvmrc
 Guardfile
 vendor/cache
+vendor/cache
