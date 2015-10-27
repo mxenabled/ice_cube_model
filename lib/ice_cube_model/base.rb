@@ -15,7 +15,10 @@ module IceCubeModel
   private
 
     def read_repeat_parameter(param_name)
-      send(self.class.repeat_parameter_mappings[param_name])
+      param_method = self.class.repeat_parameter_mappings[param_name.to_sym]
+      return nil unless respond_to?(param_method)
+
+      send(param_method)
     end
 
     def read_repeat_params
@@ -47,7 +50,7 @@ module IceCubeModel
       end
 
       def with_repeat_param(param_name, replacement)
-        repeat_parameter_mappings[param_name] = method_name = "repeat #{param_name}"
+        repeat_parameter_mappings[param_name] = method_name = "ice_cube_model #{param_name}".to_sym
         if replacement.is_a?(::Proc)
           define_method(method_name) do
             replacement.call

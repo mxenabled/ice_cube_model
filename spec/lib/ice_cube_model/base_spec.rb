@@ -25,6 +25,10 @@ describe ::IceCubeModel do
 
       fail ArgumentError, "Method `#{m}` doesn't exist."
     end
+
+    def respond_to? name, include_private = false
+      @attributes.key?(name)
+    end
   end
 
   class IceCubeObj < HashAttrs
@@ -357,6 +361,23 @@ describe ::IceCubeModel do
 
         skip 'Not supported yet'
         expect(ice_cube_model.events_between(::Date.new(2015, 1, 1), ::Date.new(2015, 4, 30))).to eq([::Date.new(2015, 1, 2), ::Date.new(2015, 3, 2)])
+      end
+
+      class IceCubeObjWithMissingParameters
+        include ::IceCubeModel::Base
+
+        attr_accessor :repeat_start_date
+        attr_accessor :repeat_day
+      end
+
+      it 'should work when class missing parameters' do
+        ice_cube_model = ::IceCubeObjWithMissingParameters.new()
+
+        ice_cube_model.repeat_start_date = ::Date.new(2015, 1, 1)
+        ice_cube_model.repeat_day = 2
+
+        expect(ice_cube_model.respond_to?(:repeat_interval)).to be(false)
+        expect(ice_cube_model.events_between(::Date.new(2015, 1, 1), ::Date.new(2015, 2, 28))).to eq([::Date.new(2015, 1, 2), ::Date.new(2015, 2, 2)])
       end
     end
   end
