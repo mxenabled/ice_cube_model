@@ -115,7 +115,6 @@ end
 
 ## notes
 - This gem is a work-in-progress.
-- `occurrences_between` is the only method currently supported.
 - Does not yet support all recurrence options. More coming.
 - Supports inheritance but will not pick up dynamic changes in parent class parameter mappings.
 
