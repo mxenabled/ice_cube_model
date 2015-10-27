@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   ##
   # Dependencies
   #
-  s.add_dependency 'ice_cube_cron', '>= 0.0.2'
+  s.add_dependency 'ice_cube_cron', '>= 0.0.3'
 
   ##
   # Development Dependencies
