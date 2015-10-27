@@ -26,7 +26,7 @@ describe ::IceCubeModel do
       fail ArgumentError, "Method `#{m}` doesn't exist."
     end
 
-    def respond_to? name, include_private = false
+    def respond_to?(name, _include_private = false)
       @attributes.key?(name)
     end
   end
@@ -309,7 +309,7 @@ describe ::IceCubeModel do
 
         with_repeat_param(:repeat_start_date, :start_date) # remap attribute to another
         with_repeat_param(:repeat_interval, :interval)     # remap attribute to a method
-        with_repeat_param(:repeat_day, -> { 1 })           # map parameter to lambda
+        with_repeat_param(:repeat_day, -> { 5 })           # map parameter to lambda
 
         def initialize(options = {})
           super(
@@ -332,52 +332,62 @@ describe ::IceCubeModel do
       end
 
       it 'should use class mappings' do
-        expect(ice_cube_model.events_between(::Date.new(2015, 1, 1), ::Date.new(2015, 12, 31))).to eq([::Date.new(2015, 2, 1)])
+        expect(ice_cube_model.events_between(::Date.new(2015, 1, 1), ::Date.new(2015, 12, 31))).to eq([::Date.new(2015, 2, 5)])
       end
 
-      class IceCubeObjWithParameterMappingsChild < IceCubeObjWithParameterMappings
-        # Adding these currently mess up parent class mappings
-        # with_repeat_param(:repeat_start_date, :starting) # remap attribute to another
-        # with_repeat_param(:repeat_interval, :interval)   # remap attribute to a method
+      context 'with inheritance' do
+        class IceCubeObjWithParameterMappingsChild < IceCubeObjWithParameterMappings
+          with_repeat_param(:repeat_start_date, :starting) # remap attribute to another
+          with_repeat_param(:repeat_interval, :interval)   # remap attribute to a method
+          # with_repeat_param(:repeat_day, -> { 5 })       # comes from parent ::IceCubeObjWithParameterMappings
 
-        def initialize(options = {})
-          super(
-            {
-              :starting => nil
-            }.merge(options)
+          def initialize(options = {})
+            super(
+              {
+                :starting => nil
+              }.merge(options)
+            )
+          end
+
+          def interval
+            2
+          end
+        end
+
+        let(:ice_cube_model) do
+          ::IceCubeObjWithParameterMappingsChild.new(
+            :starting => ::Date.new(2015, 1, 1)
           )
         end
 
-        def interval
-          2
+        it 'should inherit mappings and remap new mappings' do
+          expect(ice_cube_model.events_between(::Date.new(2015, 1, 1), ::Date.new(2015, 4, 30))).to eq([::Date.new(2015, 1, 5), ::Date.new(2015, 3, 5)])
         end
       end
 
-      it 'should support inheritance' do
-        ice_cube_model = ::IceCubeObjWithParameterMappingsChild.new(
-          :starting => ::Date.new(2015, 1, 1),
-          :repeat_day => 2
-        )
+      context 'with missing parameters' do
+        class IceCubeObjWithMissingParameters
+          include ::IceCubeModel::Base
 
-        skip 'Not supported yet'
-        expect(ice_cube_model.events_between(::Date.new(2015, 1, 1), ::Date.new(2015, 4, 30))).to eq([::Date.new(2015, 1, 2), ::Date.new(2015, 3, 2)])
-      end
+          attr_accessor :repeat_start_date
+          attr_accessor :repeat_day
+        end
 
-      class IceCubeObjWithMissingParameters
-        include ::IceCubeModel::Base
+        it 'should work when class missing parameters' do
+          ice_cube_model = ::IceCubeObjWithMissingParameters.new
 
-        attr_accessor :repeat_start_date
-        attr_accessor :repeat_day
-      end
+          ice_cube_model.repeat_start_date = ::Date.new(2015, 1, 1)
+          ice_cube_model.repeat_day = 2
 
-      it 'should work when class missing parameters' do
-        ice_cube_model = ::IceCubeObjWithMissingParameters.new()
+          expect(ice_cube_model.events_between(::Date.new(2015, 1, 1), ::Date.new(2015, 2, 28))).to eq([::Date.new(2015, 1, 2), ::Date.new(2015, 2, 2)])
+        end
 
-        ice_cube_model.repeat_start_date = ::Date.new(2015, 1, 1)
-        ice_cube_model.repeat_day = 2
-
-        expect(ice_cube_model.respond_to?(:repeat_interval)).to be(false)
-        expect(ice_cube_model.events_between(::Date.new(2015, 1, 1), ::Date.new(2015, 2, 28))).to eq([::Date.new(2015, 1, 2), ::Date.new(2015, 2, 2)])
+        it '#respond_to?' do
+          ice_cube_model = ::IceCubeObjWithMissingParameters.new
+          expect(ice_cube_model.respond_to?(:repeat_day)).to be(true)
+          expect(ice_cube_model.respond_to?(:repeat_interval)).to be(false)
+          expect(ice_cube_model.respond_to?(:methods)).to be(true)
+        end
       end
     end
   end

@@ -12,10 +12,15 @@ module IceCubeModel
     end
     alias_method :occurrences_between, :events_between
 
+    def respond_to?(name, include_private = false)
+      return true if self.class.repeat_parameter_mappings.values.include?(name.to_sym)
+      super
+    end
+
   private
 
     def read_repeat_parameter(param_name)
-      param_method = self.class.repeat_parameter_mappings[param_name.to_sym]
+      param_method = self.class.repeat_parameter_mappings[param_name.to_sym] || param_name.to_sym
       return nil unless respond_to?(param_method)
 
       send(param_method)
@@ -34,29 +39,23 @@ module IceCubeModel
 
     module ClassMethods
       def repeat_parameter_mappings
-        mappings_name = :@@repeat_parameter_mappings
-
-        unless class_variable_defined?(mappings_name)
-          class_variable_set(mappings_name,             :repeat_start_date => :repeat_start_date,
-                                                        :repeat_interval   => :repeat_interval,
-                                                        :repeat_year       => :repeat_year,
-                                                        :repeat_month      => :repeat_month,
-                                                        :repeat_day        => :repeat_day,
-                                                        :repeat_weekday    => :repeat_weekday,
-                                                        :repeat_until      => :repeat_until)
+        @repeat_parameter_mappings ||= begin
+          if superclass.respond_to?(:repeat_parameter_mappings)
+            superclass.repeat_parameter_mappings.dup
+          else
+            {}
+          end
         end
-
-        class_variable_get(mappings_name)
       end
 
       def with_repeat_param(param_name, replacement)
-        repeat_parameter_mappings[param_name] = method_name = "ice_cube_model #{param_name}".to_sym
+        repeat_parameter_mappings[param_name] = param_sym = "ice_cube_model #{param_name}".to_sym
         if replacement.is_a?(::Proc)
-          define_method(method_name) do
+          define_method(param_sym) do
             replacement.call
           end
         else
-          define_method(method_name) do
+          define_method(param_sym) do
             send(replacement)
           end
         end
