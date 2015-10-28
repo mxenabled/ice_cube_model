@@ -285,12 +285,12 @@ describe ::IceCubeModel do
     end
 
     it 'handles ::DateTime as input' do
-      expect(ice_cube_model.events_between(::DateTime.new(2015, 7, 1), ::DateTime.new(2015, 7, 31))).to eq([::DateTime.new(2015, 7, 1)])
+      expect(ice_cube_model.events_between(::Date.new(2015, 7, 1), ::Date.new(2015, 7, 31))).to eq([::Date.new(2015, 7, 1)])
     end
 
     it 'handles integer (epoch) as input' do
       ice_cube_model.repeat_start_date = 1_430_438_400 # Fri, 01 May 2015 00:00:00 GMT
-      expect(ice_cube_model.events_between(::DateTime.new(2015, 7, 1), ::DateTime.new(2015, 7, 31))).to eq([::DateTime.new(2015, 7, 1)])
+      expect(ice_cube_model.events_between(::Date.new(2015, 7, 1), ::Date.new(2015, 7, 31))).to eq([::DateTime.new(2015, 7, 1)])
     end
   end
 
