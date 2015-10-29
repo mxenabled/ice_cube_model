@@ -8,9 +8,11 @@ describe ::IceCubeModel do
         :repeat_interval => nil,
         :repeat_year => nil,
         :repeat_month => nil,
-        :repeat_day => nil,
-        :repeat_weekday => nil,
+        :repeat_day_of_month => nil,
+        :repeat_day_of_week => nil,
         :repeat_week => nil,
+        :repeat_hour => 0,
+        :repeat_minute => 0,
         :repeat_until => nil
       }.merge(attributes)
     end
@@ -45,7 +47,7 @@ describe ::IceCubeModel do
 
   context 'repeat options' do
     describe 'monthly' do
-      before { ice_cube_model.repeat_day = '1' }
+      before { ice_cube_model.repeat_day_of_month = '1' }
 
       it 'for same day' do
         expect(ice_cube_model.events_between(::Date.new(2015, 7, 1), ::Date.new(2015, 7, 1))).to eq([::Date.new(2015, 7, 1)])
@@ -57,7 +59,7 @@ describe ::IceCubeModel do
     end
 
     describe 'twice monthly' do
-      before { ice_cube_model.repeat_day = '1,15' }
+      before { ice_cube_model.repeat_day_of_month = '1,15' }
 
       it 'for one month' do
         expect(ice_cube_model.events_between(::Date.new(2015, 7, 1), ::Date.new(2015, 7, 31))).to eq([::Date.new(2015, 7, 1), ::Date.new(2015, 7, 15)])
@@ -72,7 +74,7 @@ describe ::IceCubeModel do
       let(:ice_cube_model) do
         ::IceCubeObj.new(
           :repeat_start_date => ::Date.new(2015, 5, 1),
-          :repeat_day => '1',
+          :repeat_day_of_month => '1',
           :repeat_interval => '2'
         )
       end
@@ -90,8 +92,8 @@ describe ::IceCubeModel do
       let(:ice_cube_model) do
         ::IceCubeObj.new(
           :repeat_start_date => ::Date.new(2015, 7, 6),
-          :repeat_weekday => '1',
-          :repeat_day => nil
+          :repeat_day_of_week => '1',
+          :repeat_day_of_month => nil
         )
       end
 
@@ -130,8 +132,8 @@ describe ::IceCubeModel do
       let(:ice_cube_model) do
         ::IceCubeObj.new(
           :repeat_start_date => ::Date.new(2015, 7, 6),
-          :repeat_weekday => '1',
-          :repeat_day => nil,
+          :repeat_day_of_week => '1',
+          :repeat_day_of_month => nil,
           :repeat_interval => '2'
         )
       end
@@ -172,7 +174,7 @@ describe ::IceCubeModel do
         ::IceCubeObj.new(
           :repeat_start_date => ::Date.new(2015, 1, 1),
           :repeat_month => 2,
-          :repeat_day => 1
+          :repeat_day_of_month => 1
         )
       end
 
@@ -191,7 +193,7 @@ describe ::IceCubeModel do
           :repeat_start_date => ::Date.new(2015, 1, 1),
           :repeat_interval => 2,
           :repeat_month => 2,
-          :repeat_day => 1
+          :repeat_day_of_month => 1
         )
       end
 
@@ -205,7 +207,7 @@ describe ::IceCubeModel do
         let(:ice_cube_model) do
           ::IceCubeObj.new(
             :repeat_start_date => ::Date.new(2015, 1, 1),
-            :repeat_weekday => '5L'
+            :repeat_day_of_week => '5L'
           )
         end
 
@@ -218,7 +220,7 @@ describe ::IceCubeModel do
         let(:ice_cube_model) do
           ::IceCubeObj.new(
             :repeat_start_date => ::Date.new(2015, 1, 1),
-            :repeat_weekday => '3L'
+            :repeat_day_of_week => '3L'
           )
         end
 
@@ -233,7 +235,7 @@ describe ::IceCubeModel do
         let(:ice_cube_model) do
           ::IceCubeObj.new(
             :repeat_start_date => ::Date.new(2015, 1, 1),
-            :repeat_day => 'L'
+            :repeat_day_of_month => 'L'
           )
         end
 
@@ -247,7 +249,7 @@ describe ::IceCubeModel do
       let(:ice_cube_model) do
         ::IceCubeObj.new(
           :repeat_start_date => ::Date.new(2015, 1, 1),
-          :repeat_weekday => '1#2'
+          :repeat_day_of_week => '1#2'
         )
       end
 
@@ -265,8 +267,10 @@ describe ::IceCubeModel do
     let(:ice_cube_model) do
       ::IceCubeObj.new(
         :repeat_start_date => ::Date.new(2015, 1, 1),
-        :repeat_day => '1',
-        :repeat_until => ::Date.new(2015, 3, 1)
+        :repeat_day_of_month => '1',
+        :repeat_until => ::Date.new(2015, 3, 1),
+        :repeat_hour => 0,
+        :repeat_minute => 0
       )
     end
 
@@ -279,8 +283,10 @@ describe ::IceCubeModel do
     let(:ice_cube_model) do
       ::IceCubeObj.new(
         :repeat_start_date => ::DateTime.new(2015, 5, 1),
-        :repeat_day => '1',
-        :repeat_interval => '2'
+        :repeat_day_of_month => '1',
+        :repeat_interval => '2',
+        :repeat_hour => 0,
+        :repeat_minute => 0
       )
     end
 
@@ -297,6 +303,7 @@ describe ::IceCubeModel do
   context '::IceCubeModel::Base' do
     describe '#events_between' do
       it 'should emit [::Time]' do
+        ice_cube_model.repeat_day_of_month = 1
         results = ice_cube_model.events_between(::Date.new(2015, 7, 1), ::Date.new(2015, 7, 31))
         expect(results).to eq([::Date.new(2015, 7, 1)])
         expect(results[0]).to be_a(::Time)
@@ -311,7 +318,7 @@ describe ::IceCubeModel do
 
         with_repeat_param(:repeat_start_date, :start_date) # remap attribute to another
         with_repeat_param(:repeat_interval, :interval)     # remap attribute to a method
-        with_repeat_param(:repeat_day, -> { 5 })           # map parameter to lambda
+        with_repeat_param(:repeat_day_of_month, -> { 5 })           # map parameter to lambda
 
         def initialize(options = {})
           super(
@@ -341,7 +348,7 @@ describe ::IceCubeModel do
         class IceCubeObjWithParameterMappingsChild < IceCubeObjWithParameterMappings
           with_repeat_param(:repeat_start_date, :starting) # remap attribute to another
           with_repeat_param(:repeat_interval, :interval)   # remap attribute to a method
-          # with_repeat_param(:repeat_day, -> { 5 })       # comes from parent ::IceCubeObjWithParameterMappings
+          # with_repeat_param(:repeat_day_of_month, -> { 5 })       # comes from parent ::IceCubeObjWithParameterMappings
 
           def initialize(options = {})
             super(
@@ -372,21 +379,24 @@ describe ::IceCubeModel do
           include ::IceCubeModel::Base
 
           attr_accessor :repeat_start_date
-          attr_accessor :repeat_day
+          attr_accessor :repeat_day_of_month
+
+          with_repeat_param :repeat_hour, -> { 0 }
+          with_repeat_param :repeat_minute, -> { 0 }
         end
 
         it 'should work when class missing parameters' do
           ice_cube_model = ::IceCubeObjWithMissingParameters.new
 
           ice_cube_model.repeat_start_date = ::Date.new(2015, 1, 1)
-          ice_cube_model.repeat_day = 2
+          ice_cube_model.repeat_day_of_month = 2
 
           expect(ice_cube_model.events_between(::Date.new(2015, 1, 1), ::Date.new(2015, 2, 28))).to eq([::Date.new(2015, 1, 2), ::Date.new(2015, 2, 2)])
         end
 
         it '#respond_to?' do
           ice_cube_model = ::IceCubeObjWithMissingParameters.new
-          expect(ice_cube_model.respond_to?(:repeat_day)).to be(true)
+          expect(ice_cube_model.respond_to?(:repeat_day_of_month)).to be(true)
           expect(ice_cube_model.respond_to?(:repeat_interval)).to be(false)
           expect(ice_cube_model.respond_to?(:methods)).to be(true)
         end
@@ -398,7 +408,9 @@ describe ::IceCubeModel do
     let(:ice_cube_model) do
       ::IceCubeObj.new(
         :repeat_start_date => ::Date.new(2015, 6, 1),
-        :repeat_day => 5
+        :repeat_day_of_month => 5,
+        :repeat_hour => 0,
+        :repeat_minute => 0
       )
     end
 

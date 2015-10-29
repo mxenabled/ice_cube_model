@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    ice_cube_model (0.0.3)
-      ice_cube_cron (~> 0.0)
+    ice_cube_model (0.0.4)
+      ice_cube_cron (~> 1)
 
 GEM
   remote: https://rubygems.org/
@@ -20,7 +20,7 @@ GEM
     diff-lcs (1.2.5)
     i18n (0.7.0)
     ice_cube (0.13.0)
-    ice_cube_cron (0.0.4)
+    ice_cube_cron (1.0.0)
       activesupport (~> 4)
       ice_cube (~> 0.13)
     json (1.8.3)

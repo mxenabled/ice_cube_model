@@ -119,6 +119,5 @@ end
 - Supports inheritance but will not pick up dynamic changes in parent class parameter mappings.
 
 ## todo
-- Add support for time options
 - Allow mapping of a single cron expression (string) field, rather than individual fields.
 

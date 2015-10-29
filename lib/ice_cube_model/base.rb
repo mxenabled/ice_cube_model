@@ -66,8 +66,10 @@ module IceCubeModel
         :repeat_interval => read_repeat_parameter(:repeat_interval),
         :repeat_year => read_repeat_parameter(:repeat_year),
         :repeat_month => read_repeat_parameter(:repeat_month),
-        :repeat_day => read_repeat_parameter(:repeat_day),
-        :repeat_weekday => read_repeat_parameter(:repeat_weekday),
+        :repeat_day_of_month => read_repeat_parameter(:repeat_day_of_month),
+        :repeat_day_of_week => read_repeat_parameter(:repeat_day_of_week),
+        :repeat_hour => read_repeat_parameter(:repeat_hour),
+        :repeat_minute => read_repeat_parameter(:repeat_minute),
         :repeat_until => read_repeat_parameter(:repeat_until)
       }
     end
