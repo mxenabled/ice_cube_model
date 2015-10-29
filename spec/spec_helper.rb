@@ -44,3 +44,5 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 end
+
+Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each { |f| require f }

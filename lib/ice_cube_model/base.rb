@@ -1,55 +1,11 @@
 module IceCubeModel
   module Base
-    DELEGATED_METHODS = [
-      :occurrences,
-      :all_occurrences,
-      :all_occurrences_enumerator,
-      :next_occurrences,
-      :next_occurrence,
-      :previous_occurrences,
-      :previous_occurrence,
-      :remaining_occurrences,
-      :remaining_occurrences_enumerator,
-      :occurrences_between,
-      :occurs_between?,
-      :occurring_between?,
-      :occurs_on?,
-      :first,
-      :last
-    ]
-
     def self.included(base)
       base.extend(::IceCubeModel::Base::ClassMethods)
     end
 
     def schedule
       ::IceCube::Schedule.from_cron(read_repeat_parameter(:repeat_start_date), read_repeat_params)
-    end
-
-    def respond_to?(name, include_private = false)
-      ## Does respond to delegated methods. method_missing will lazy define them as they are used.
-      return true if DELEGATED_METHODS.include?(name.to_sym)
-      return true if self.class.repeat_parameter_mappings.values.include?(name.to_sym)
-      super
-    end
-
-    # TODO: For backward compatibility. Remove before prod ready release.
-    delegate :occurrences_between, :to => :schedule
-    alias_method :events_between, :occurrences_between
-
-    ##
-    # Implementing method_missing as a *lazy* delegator. Doing this to prevent overwriting
-    # target class' methods.
-    #
-    def method_missing(name, *args, &block)
-      if DELEGATED_METHODS.include?(name.to_sym)
-        self.class.send(:define_method, name.to_sym) do |*method_args|
-          schedule.send(name, *method_args, &block)
-        end
-        send(name, *args)
-      else
-        super
-      end
     end
 
   private
