@@ -1,4 +1,4 @@
-[![Gem Version](https://badge.fury.io/rb/ice_cube_model.svg)](https://badge.fury.io/rb/ice_cube_model) [![Build Status](https://travis-ci.org/mattnichols/ice_cube_model.svg?branch=master)](https://travis-ci.org/mattnichols/ice_cube_model)
+[![Gem Version](https://badge.fury.io/rb/ice_cube_model.svg)](https://badge.fury.io/rb/ice_cube_model) [![Build Status](https://travis-ci.org/mattnichols/ice_cube_model.svg?branch=master)](https://travis-ci.org/mattnichols/ice_cube_model) [![Code Climate](https://codeclimate.com/github/mattnichols/ice_cube_model/badges/gpa.svg)](https://codeclimate.com/github/mattnichols/ice_cube_model) [![Test Coverage](https://codeclimate.com/github/mattnichols/ice_cube_model/badges/coverage.svg)](https://codeclimate.com/github/mattnichols/ice_cube_model/coverage)
 
 # ice_cube_model
 
