@@ -1,4 +1,4 @@
-[![Gem Version](https://badge.fury.io/rb/ice_cube_model.svg)](https://badge.fury.io/rb/ice_cube_model)
+[![Gem Version](https://badge.fury.io/rb/ice_cube_model.svg)](https://badge.fury.io/rb/ice_cube_model) [![Build Status](https://travis-ci.org/mattnichols/ice_cube_model.svg?branch=master)](https://travis-ci.org/mattnichols/ice_cube_model)
 
 # ice_cube_model
 
